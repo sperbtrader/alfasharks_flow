@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlfaSharks FLOW - Trading Automatizado com Alta Performance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0f2440 0%, #1a4d6f 100%);
+            padding: 80px 20px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path fill="rgba(255,255,255,0.05)" d="M0,0 L1200,0 L1200,60 Q600,120 0,60 Z"/></svg>') no-repeat bottom;
+            opacity: 0.3;
+        }
+
+        .logo-container {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            max-width: 400px;
+            width: 90%;
+            height: auto;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            color: #ffffff;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero h1 .highlight {
+            color: #00d4ff;
+        }
+
+        .hero p {
+            color: #e0e0e0;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 16px 40px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid #00d4ff;
+        }
+
+        .btn-secondary:hover {
+            background: #00d4ff;
+            transform: translateY(-3px);
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 60px 20px;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 30px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-number.green {
+            color: #22c55e;
+        }
+
+        .stat-number.blue {
+            color: #3b82f6;
+        }
+
+        .stat-number.orange {
+            color: #f97316;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 1rem;
+        }
+
+        /* Chart Section */
+        .chart-section {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .chart-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .chart-image {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .chart-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Strategy Section */
+        .strategy {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 80px 20px;
+        }
+
+        .strategy-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+        }
+
+        .strategy-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .strategy-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid;
+            transition: transform 0.3s ease;
+        }
+
+        .strategy-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .strategy-card.blue {
+            border-left-color: #3b82f6;
+        }
+
+        .strategy-card.green {
+            border-left-color: #22c55e;
+        }
+
+        .strategy-card.purple {
+            border-left-color: #8b5cf6;
+        }
+
+        .strategy-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .strategy-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+
+        .strategy-card p {
+            color: #6b7280;
+            line-height: 1.8;
+        }
+
+        /* Results Section */
+        .results {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .results-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .result-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+            background: #1a1a1a;
+        }
+
+        .result-image:hover {
+            transform: translateY(-5px);
+        }
+
+        .result-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Parameters Section */
+        .parameters {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 80px 20px;
+        }
+
+        .parameters-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .param-showcase {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            margin-top: 50px;
+            align-items: start;
+        }
+
+        .param-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 20px;
+            background: #2d2d2d;
+        }
+
+        .param-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .param-details {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .param-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .param-item {
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            border-left: 4px solid #00d4ff;
+        }
+
+        .param-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .param-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+
+        .param-value.green {
+            color: #22c55e;
+        }
+
+        .param-value.red {
+            color: #ef4444;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            color: white;
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        .cta-section .btn {
+            margin: 10px;
+        }
+
+        .btn-white {
+            background: white;
+            color: #0099cc;
+        }
+
+        .btn-white:hover {
+            background: #f0f0f0;
+            transform: translateY(-3px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: #0099cc;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 60px 20px 30px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            color: #00d4ff;
+        }
+
+        .footer-section p {
+            color: #9ca3af;
+            line-height: 1.8;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #00d4ff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            color: #6b7280;
+        }
+
+        /* WhatsApp Float Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
+        }
+
+        .whatsapp-float svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 20px 40px;
+            }
+
+            .logo {
+                max-width: 280px;
+            }
+
+            .chart-container,
+            .param-showcase {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .param-image {
+                position: relative;
+                top: 0;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="logo-container fade-in-up">
+            <svg class="logo" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+                <path d="M180 40 Q160 30 140 40 L120 60 Q110 70 120 80 L140 100 Q160 110 180 100 L200 80 Q210 70 200 60 Z" fill="#1a4d6f" stroke="#00d4ff" stroke-width="2"/>
+                <path d="M160 35 L170 15 L180 35 Z" fill="#00d4ff"/>
+                <rect x="135" y="55" width="8" height="35" fill="#00d4ff" rx="2"/>
+                <rect x="150" y="50" width="8" height="40" fill="#22c55e" rx="2"/>
+                <rect x="165" y="60" width="8" height="30" fill="#00d4ff" rx="2"/>
+                <text x="200" y="75" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#1a4d6f">AlfaSharks</text>
+                <text x="200" y="105" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#00d4ff">FLOW</text>
+            </svg>
+        </div>
+        <div class="hero-content">
+            <h1>Trading Automatizado com <span class="highlight">Alta Performance</span></h1>
+            <p>O AlfaSharks FLOW é um robô de negociação automatizada desenvolvido para capturar movimentos de tendência com precisão no mercado de Mini-Índice (WINFUT).</p>
+            <div class="cta-buttons">
+                <a href="https://chk.eduzz.com/69KAP1K80O" class="btn btn-primary">Contratar Agora</a>
+                <a href="https://cursos.nutror.com/curso/829c85b9c0a460b7cb57645b6d302581dd6727e9" class="btn btn-secondary">Acessar Plataforma</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number green">2.38</div>
+                <div class="stat-label">Fator de Lucro</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number blue">50.88%</div>
+                <div class="stat-label">Taxa de Acerto</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number orange">13.82%</div>
+                <div class="stat-label">Drawdown Máximo</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number green">2.30</div>
+                <div class="stat-label">Razão L/P</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chart Section -->
+    <section class="chart-section">
+        <div class="chart-container">
+            <div>
+                <h2 class="section-title">Desempenho Comprovado</h2>
+                <p style="color: #6b7280; font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">
+                    Backtest realizado de 24/09/2025 a 04/11/2025 com dados reais de mercado. Resultados consistentes com crescimento de patrimônio sólido e gestão de risco eficiente.
+                </p>
+                <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 0.95rem;">
+                        <div>
+                            <div style="color: #6b7280; margin-bottom: 5px;">Lucro Bruto</div>
+                            <div style="color: #22c55e; font-size: 1.3rem; font-weight: bold;">R$ 1.508,00</div>
+                        </div>
+                        <div>
+                            <div style="color: #6b7280; margin-bottom: 5px;">Saldo Líquido</div>
+                            <div style="color: #22c55e; font-size: 1.3rem; font-weight: bold;">R$ 788,50</div>
+                        </div>
+                        <div>
+                            <div style="color: #6b7280; margin-bottom: 5px;">Total de Operações</div>
+                            <div style="color: #1a1a1a; font-size: 1.3rem; font-weight: bold;">57</div>
+                        </div>
+                        <div>
+                            <div style="color: #6b7280; margin-bottom: 5px;">Ops. Vencedoras</div>
+                            <div style="color: #22c55e; font-size: 1.3rem; font-weight: bold;">29 (50.88%)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-image">
+                <!-- Substitua 'IMAGEM-2.jpg' pelo caminho real da sua imagem -->
+                <img src="IMAGEM-2.jpg" alt="Gráfico de Patrimônio - Evolução do Capital">
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategy Section -->
+    <section class="strategy">
+        <div class="strategy-container">
+            <h2 class="section-title">A Estratégia AlfaSharks FLOW</h2>
+            <p class="section-subtitle">Baseada em uma filosofia simples: deixar o lucro correr e cortar o prejuízo rapidamente</p>
+            
+            <div class="strategy-cards">
+                <div class="strategy-card blue">
+                    <div class="strategy-icon">📈</div>
+                    <h3>Seguimento de Tendência</h3>
+                    <p>Utiliza filtros de tendência (VWAP) para confirmar a direção predominante do mercado antes de qualquer operação.</p>
+                </div>
+                
+                <div class="strategy-card green">
+                    <div class="strategy-icon">🛡️</div>
+                    <h3>Gestão de Risco</h3>
+                    <p>Stop Loss apertado (0.4x ATR) e Alvo de Lucro amplo (3.5x ATR), resultando em uma razão risco/recompensa de 8.75.</p>
+                </div>
+                
+                <div class="strategy-card purple">
+                    <div class="strategy-icon">⚡</div>
+                    <h3>Trailing Stop</h3>
+                    <p>Sistema inteligente que protege o lucro à medida que a operação avança a seu favor, capturando movimentos maiores.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results">
+        <div class="results-container">
+            <h2 class="section-title">Resultados Detalhados</h2>
+            <p class="section-subtitle">Dados reais extraídos do backtest completo</p>
+            
+            <div class="results-grid">
+                <div class="result-image">
+                    <!-- Substitua 'IMAGEM-1.jpg' pelo caminho real da sua imagem -->
+                    <img src="IMAGEM-1.jpg" alt="Tabela de Estatísticas Detalhadas">
+                </div>
+                
+                <div class="result-image">
+                    <!-- Substitua 'IMAGEM-3.jpg' pelo caminho real da sua imagem -->
+                    <img src="IMAGEM-3.jpg" alt="Gráfico de Lucro e Prejuízo por Operação">
+                </div>
+                
+                <div class="result-image">
+                    <!-- Substitua 'IMAGEM-4.jpg' pelo caminho real da sua imagem -->
+                    <img src="IMAGEM-4.jpg" alt="Distribuição de Operações ao Longo do Tempo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parameters Section -->
+    <section class="parameters">
+        <div class="parameters-container">
+            <h2 class="section-title">Parâmetros Configuráveis</h2>
+            <p class="section-subtitle">Ajuste a estratégia de acordo com seu perfil de risco</p>
+            
+            <div class="param-showcase">
+                <div class="param-image">
+                    <!-- Substitua 'IMAGEM-5.jpg' pelo caminho real da sua imagem -->
+                    <img src="IMAGEM-5.jpg" alt="Painel de Parâmetros Editáveis">
+                </div>
+                
+                <div class="param-details">
+                    <h3 style="margin-bottom: 25px; color: #1a1a1a; font-size: 1.8rem;">Principais Configurações</h3>
+                    
+                    <div class="param-grid">
+                        <div class="param-item">
+                            <div class="param-label">Contratos</div>
+                            <div class="param-value">1</div>
+                        </div>
+                        
+                        <div class="param-item">
+                            <div class="param-label">Alvo (x ATR)</div>
+                            <div class="param-value green">3.50</div>
+                        </div>
+                        
+                        <div class="param-item">
+                            <div class="param-label">Stop (x ATR)</div>
+                            <div class="param-value red">0.40</div>
+                        </div>
+                        
+                        <div class="param-item">
+                            <div class="param-label">Perda Máx/Op</div>
+                            <div class="param-value">25</div>
+                        </div>
+                        
+                        <div class="param-item">
+                            <div class="param-label">Início Trailing</div>
+                            <div class="param-value">20</div>
+                        </div>
+                        
+                        <div class="param-item">
+                            <div class="param-label">Trailing</div>
+                            <div class="param-value">10</div>
+                        </div>
+                        
+                        <div class="param-item">
+                            <div class="param-label">Lucro/Contrato</div>
+                            <div class="param-value green">100</div>
+                        </div>
+                        
+                        <div class="param-item">
+                            <div class="param-label">Perda/Contrato</div>
+                            <div class="param-value red">100</div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #dbeafe; border-left: 4px solid #3b82f6; padding: 20px; border-radius: 10px; margin-top: 30px;">
+                        <h4 style="color: #1e40af; margin-bottom: 10px;">💡 Razão Risco/Recompensa</h4>
+                        <p style="color: #1e3a8a; line-height: 1.8;">
+                            Com Alvo de 3.5x ATR e Stop de 0.4x ATR, a razão é de 8.75:1. Isso significa que cada operação busca ganhar 8.75 vezes mais do que arrisca, permitindo lucratividade mesmo com taxa de acerto moderada.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Pronto para Começar?</h2>
+            <p>O AlfaSharks FLOW oferece uma estratégia comprovada com gestão de risco rigorosa e performance consistente.</p>
+            <div>
+                <a href="https://chk.eduzz.com/69KAP1K80O" class="btn btn-white">Contratar Agora</a>
+                <a href="https://api.whatsapp.com/send?phone=5551981624122&text=Olá! Gostaria de tirar dúvidas sobre o AlfaSharks FLOW" class="btn btn-outline">Tirar Dúvidas</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>AlfaSharks FLOW</h3>
+                <p>Robô de trading automatizado com alta performance.</p>
+                <p style="margin-top: 15px; font-size: 0.9rem;">Versão 4.2 NTFL 11/2025</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Produto</h3>
+                <ul class="footer-links">
+                    <li><a href="https://chk.eduzz.com/69KAP1K80O">Contratar</a></li>
+                    <li><a href="https://cursos.nutror.com/curso/829c85b9c0a460b7cb57645b6d302581dd6727e9">Plataforma</a></li>
+                    <li><a href="https://cursos.nutror.com/curso/829c85b9c0a460b7cb57645b6d302581dd6727e9">Documentação</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Suporte</h3>
+                <ul class="footer-links">
+                    <li><a href="https://api.whatsapp.com/send?phone=5551981624122&text=Olá! Preciso de suporte">WhatsApp</a></li>
+                    <li><a href="https://cursos.nutror.com/curso/829c85b9c0a460b7cb57645b6d302581dd6727e9">Central de Ajuda</a></li>
+                    <li><a href="https://api.whatsapp.com/send?phone=5551981624122&text=Olá! Gostaria de fazer uma pergunta">FAQ</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Legal</h3>
